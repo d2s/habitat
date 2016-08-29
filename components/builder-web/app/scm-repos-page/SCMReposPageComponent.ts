@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from "angular2/core";
+import {Component, OnInit} from "@angular/core";
 import {AppStore} from "../AppStore";
 import {fetchGitHubOrgs, fetchGitHubRepos,
         onGitHubOrgSelect, setSelectedGitHubOrg, resetRedirectRoute} from "../actions/index";

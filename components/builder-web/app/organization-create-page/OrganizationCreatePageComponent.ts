@@ -16,8 +16,8 @@ import {addOrg, cancelOrgInvitation, inviteMemberToOrg, finishAddingOrg,
     performOrgMemberSearch, toggleMemberActionMenu} from "../actions/index";
 
 import {AppStore} from "../AppStore";
-import {Component} from "angular2/core";
-import {ControlGroup, FormBuilder, Validators} from "angular2/common";
+import {Component} from "@angular/core";
+import {ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {OrganizationMembersComponent} from
     "../organization-members/OrganizationMembersComponent";
 import {requireSignIn} from "../util";

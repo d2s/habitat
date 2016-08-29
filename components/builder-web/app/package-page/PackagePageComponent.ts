@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from "angular2/core";
-import {RouteParams, RouterLink} from "angular2/router";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
 import {AppStore} from "../AppStore";
 import {Package} from "../records/Package";
 import {Origin} from "../records/Origin";
@@ -28,8 +28,8 @@ import {TabsComponent} from "../TabsComponent";
 import {PackageInfoComponent} from "../package-info/PackageInfoComponent";
 
 @Component({
-    directives: [PackageBreadcrumbsComponent, PackageListComponent, RouterLink,
-                 SpinnerComponent, TabsComponent, TabComponent, PackageInfoComponent],
+    directives: [PackageBreadcrumbsComponent, PackageListComponent,
+        SpinnerComponent, TabsComponent, TabComponent, PackageInfoComponent],
     template: `
     <div class="hab-package page-title">
         <h2>Package</h2>
@@ -76,7 +76,7 @@ import {PackageInfoComponent} from "../package-info/PackageInfoComponent";
 export class PackagePageComponent implements OnInit {
     private spinnerFetchPackage: Function;
 
-    constructor(private routeParams: RouteParams, private store: AppStore) {
+    constructor(private route: ActivatedRoute, private store: AppStore) {
         this.spinnerFetchPackage = this.fetchPackage.bind(this);
     }
 
@@ -85,7 +85,7 @@ export class PackagePageComponent implements OnInit {
     // populate more data by dispatching setCurrentPackage.
     get package() {
         const currentPackageFromState = this.store.getState().packages.current;
-        const params = this.routeParams.params;
+        const params = this.route.params;
 
         // Use the currentPackage from the state if it's the same package we want
         // here.

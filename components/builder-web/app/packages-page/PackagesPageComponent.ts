@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Control} from "angular2/common";
-import {Component, OnInit} from "angular2/core";
-import {RouteParams} from "angular2/router";
+import {Control} from "@angular/common";
+import {Component, OnInit} from "@angular/core";
+import {RouterLink, ActivatedRoute} from "@angular/router";
 import {AppStore} from "../AppStore";
 import {PackageBreadcrumbsComponent} from "../PackageBreadcrumbsComponent";
 import {SpinnerComponent} from "../SpinnerComponent";
@@ -65,7 +65,7 @@ export class PackagesPageComponent implements OnInit {
     private searchBox: Control;
     private spinnerFetchPackages: Function;
 
-    constructor(private store: AppStore, private routeParams: RouteParams) {
+    constructor(private store: AppStore, private route: ActivatedRoute) {
         this.spinnerFetchPackages = this.fetchPackages.bind(this);
     }
 
@@ -86,8 +86,8 @@ export class PackagesPageComponent implements OnInit {
     }
 
     public ngOnInit() {
-        if ("query" in this.routeParams.params) {
-            this.search(this.routeParams.params["query"]);
+        if ("query" in this.route.params) {
+            this.search(this.route.params["query"]);
         } else {
             this.fetchPackages();
         }
@@ -99,12 +99,12 @@ export class PackagesPageComponent implements OnInit {
     }
 
     private fetchPackages() {
-        this.store.dispatch(filterPackagesBy(this.routeParams.params,
+        this.store.dispatch(filterPackagesBy(this.route.params,
             this.searchQuery));
     }
 
     private fetchMorePackages() {
-        this.store.dispatch(filterPackagesBy(this.routeParams.params,
+        this.store.dispatch(filterPackagesBy(this.route.params,
             this.searchQuery,
             this.store.getState().packages.nextRange));
         return false;

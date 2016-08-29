@@ -14,12 +14,13 @@
 
 import {AppStore} from "../AppStore";
 import {BuildListComponent} from "./BuildListComponent";
-import {Component, OnInit} from "angular2/core";
-import {RouterLink, RouteParams} from "angular2/router";
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {RouterLink, ActivatedRoute} from "@angular/router";
 import {TabComponent} from "../TabComponent";
 import {TabsComponent} from "../TabsComponent";
 import {fetchBuilds, fetchProject, deleteProject} from "../actions/index";
 import {friendlyTime, requireSignIn} from "../util";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
     directives: [BuildListComponent, RouterLink, TabsComponent, TabComponent],
@@ -33,11 +34,12 @@ import {friendlyTime, requireSignIn} from "../util";
             <header class="page-title">
                 <h2>{{project.id}}</h2>
                 <h4 *ngIf="project.latestBuild">
-                    <a [routerLink]="['Package', {
-                        id: project.id,
-                        version: project.latestBuild.version,
-                        release: project.latestBuild.release
-                    }]">
+                    <a [routerLink]="['pkgs',
+                        project.id.split('/')[0],
+                        project.id.split('/')[1],
+                        project.latestBuild.version,
+                        project.latestBuild.release
+                    ]">
                         {{project.latestBuild.version}} /
                         {{project.latestBuild.release}}
                     </a>
@@ -130,8 +132,12 @@ import {friendlyTime, requireSignIn} from "../util";
     </div>`
 })
 
-export class ProjectPageComponent implements OnInit {
-    constructor(private routeParams: RouteParams, private store: AppStore) {
+export class ProjectPageComponent implements OnInit, OnDestroy {
+    private sub: Subscription;
+    private origin: string;
+    private name: string;
+
+    constructor(private route: ActivatedRoute, private store: AppStore) {
         requireSignIn(this);
     }
 
@@ -148,10 +154,18 @@ export class ProjectPageComponent implements OnInit {
     }
 
     get id() {
-        return `${this.routeParams.params["origin"]}/${this.routeParams.params["name"]}`;
+        return `${this.origin}/${this.name}`;
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            this.origin = params["origin"];
+            this.name = params["name"];
+        });
         this.store.dispatch(fetchProject(this.id, this.token, true));
         // leaving this commented out on purpose as a reminder to make it work
         // again once the API returns build information

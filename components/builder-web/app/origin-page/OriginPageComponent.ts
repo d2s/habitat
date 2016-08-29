@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from "angular2/core";
-import {RouteParams, RouterLink} from "angular2/router";
+import {Component, OnInit} from "@angular/core";
+import {RouterLink, ActivatedRoute} from "@angular/router";
 import {AppStore} from "../AppStore";
 import {fetchOrigin, fetchOriginInvitations, fetchOriginMembers,
     fetchOriginPublicKeys, inviteUserToOrigin, setCurrentOriginAddingPublicKey,
@@ -38,7 +38,7 @@ import {PackagesListComponent} from "../packages-list/PackagesListComponent";
     <div class="hab-origin">
         <div class="page-title">
             <a class="button hab-origin--pkgs-link"
-                [routerLink]="['PackagesForOrigin', { origin: origin.name }]">
+                [routerLink]="['pkgs', origin.name]">
                 View <em>{{origin.name}}</em> packages
             </a>
             <h2>{{origin.name}}</h2>
@@ -187,7 +187,7 @@ export class OriginPageComponent implements OnInit {
     private uploadPrivateKey: Function;
     private uploadPublicKey: Function;
 
-    constructor(private routeParams: RouteParams, private store: AppStore) {
+    constructor(private route: ActivatedRoute, private store: AppStore) {
         this.onPrivateKeyCloseClick = () =>
             this.setOriginAddingPrivateKey(false);
         this.onPublicKeyCloseClick = () =>
@@ -243,7 +243,7 @@ export class OriginPageComponent implements OnInit {
     // populate more data by dispatching `fetchOrigin`.
     get origin() {
         const currentOriginFromState = this.store.getState().origins.current;
-        const params = this.routeParams.params;
+        const params = this.route.params;
 
         // Use the current origin from the state if it's the same origin we want
         // here.

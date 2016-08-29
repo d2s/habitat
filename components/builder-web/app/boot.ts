@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-///<reference path="../node_modules/angular2/typings/browser.d.ts"/>
+///<reference path="../typings/browser/index.d.ts" />
 ///<reference path='../node_modules/immutable/dist/immutable.d.ts'/>
 
 // Include the nav control from the main website
 require("./zepto-custom");
 import "./nav";
 
-import "angular2/bundles/angular2-polyfills";
-import { bind, enableProdMode } from "angular2/core";
-import { bootstrap } from "angular2/platform/browser";
-import { LocationStrategy, HashLocationStrategy, ROUTER_PROVIDERS }
-    from "angular2/router";
-
+import "reflect-metadata";
+require("zone.js/dist/zone");
+import { bind, enableProdMode } from "@angular/core";
+import { bootstrap } from "@angular/platform-browser-dynamic";
+import { LocationStrategy, HashLocationStrategy } from "@angular/common";
+import { APP_ROUTER_PROVIDER } from "./routes";
 import { AppComponent } from "./AppComponent";
 import { AppStore } from "./AppStore";
 import config from "./config";
@@ -46,7 +46,7 @@ if (config["environment"] === "production") {
 if (goingToBoot) {
     bootstrap(AppComponent, [
         AppStore,
-        ROUTER_PROVIDERS,
+        APP_ROUTER_PROVIDER,
         // Temporarily adding this until we have nginx handle routing non-existent
         // pages.
         bind(LocationStrategy).toClass(HashLocationStrategy)

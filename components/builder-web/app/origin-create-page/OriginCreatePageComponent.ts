@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Control, ControlGroup, FormBuilder, Validators} from "angular2/common";
-import {AfterViewInit, Component, OnInit} from "angular2/core";
+import {Control, ControlGroup, FormBuilder, Validators} from "@angular/common";
+import {AfterViewInit, Component, OnInit} from "@angular/core";
 import {Observable} from "rxjs";
 import {AppStore} from "../AppStore";
 import {AsyncValidator} from "../AsyncValidator";

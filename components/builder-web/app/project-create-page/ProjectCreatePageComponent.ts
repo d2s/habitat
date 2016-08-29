@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from "angular2/core";
+import {Component, OnInit} from "@angular/core";
 import {requireSignIn} from "../util";
 import {RouteParams} from "angular2/router";
 import {AppStore} from "../AppStore";
@@ -35,11 +35,11 @@ import {ProjectInfoComponent} from "../project-info/ProjectInfoComponent";
 })
 
 export class ProjectCreatePageComponent implements OnInit {
-    constructor(private routeParams: RouteParams, private store: AppStore) {}
+    constructor(private route: ActivatedRoute, private store: AppStore) {}
 
     get repo() {
-        if (this.routeParams.params["repo"]) {
-            return this.routeParams.params["repo"];
+        if (this.route.queryParams["repo"]) {
+            return this.route.queryParams["repo"];
         } else {
             return undefined;
         }

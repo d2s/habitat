@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Control, ControlGroup, Validators} from "angular2/common";
-import {ChangeDetectorRef, Component, OnInit, OnChanges} from "angular2/core";
+import {Control, ControlGroup, Validators} from "@angular/common";
+import {ChangeDetectorRef, Component, OnInit, OnChanges} from "@angular/core";
 import {AsyncValidator} from "./AsyncValidator";
 
 @Component({

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnInit} from "angular2/core";
-import {Control, ControlGroup, FormBuilder, Validators} from "angular2/common";
+import {Component, Input, OnInit} from "@angular/core";
+import {Control, ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {List} from "immutable";
 import {TabComponent} from "../TabComponent";
 
@@ -52,7 +52,7 @@ import {TabComponent} from "../TabComponent";
                     <h3>Pending Invitations</h3>
                     <p *ngIf="invitations.size === 0">No pending invitations.</p>
                     <ul class="pending">
-                        <li *ngFor="#invitation of invitations"
+                        <li *ngFor="let invitation of invitations"
                             class="hab-item-list hab-no-select">
                             <h3>{{invitation.account_name}}</h3>
                         </li>
@@ -63,7 +63,7 @@ import {TabComponent} from "../TabComponent";
                     <h3>Current Members</h3>
                     <p *ngIf="members.size === 0">No Members.</p>
                     <ul>
-                        <li *ngFor="#member of members"
+                        <li *ngFor="let member of members"
                             class="hab-item-list hab-no-select">
                             <h3>{{member}}</h3>
                         </li>
